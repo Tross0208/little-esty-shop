@@ -12,4 +12,8 @@ class Invoice < ApplicationRecord
   def total_revenue
     invoice_items.sum("invoice_items.quantity * invoice_items.unit_price")
   end
+
+  def incomplete_invoices
+    invoice_items.where(status: [0, 1]).order(created_at: :asc)
+  end
 end

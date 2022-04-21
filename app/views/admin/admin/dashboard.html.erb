@@ -6,3 +6,9 @@
   <%= link_to "Merchants View", "/admin/merchants" %>
   <%= link_to "Invoices View", "/admin/invoices" %>
 </div>
+
+<div id="incomplete-invoices">
+  <% @invoice.incomplete_invoices.each do |invoice| %>
+  <%= link_to "#{invoice.id}", "admin/items/#{invoice.id}" %>Created At: <%= invoice_item.invoice.created_at.strftime("%A, %B %e, %Y") %>
+  <% end %>
+</div>
