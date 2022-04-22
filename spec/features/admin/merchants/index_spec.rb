@@ -34,21 +34,21 @@ RSpec.describe "Admin Merchants Index", type: :feature do
 
     within("#merchants") do
       within("#merchant-#{@merchant_1.id}") do
-        expect(page).to have_link(@merchant_1.name.to_s, href: "/admin/merchants/#{@merchant_1.id}")
-        expect(page).to_not have_link(@merchant_2.name.to_s, href: "/admin/merchants/#{@merchant_2.id}")
-        expect(page).to_not have_link(@merchant_3.name.to_s, href: "/admin/merchants/#{@merchant_3.id}")
+        expect(page).to have_link(@merchant_1.name, href: admin_merchant_path(@merchant_1))
+        expect(page).to_not have_link(@merchant_2.name, href: admin_merchant_path(@merchant_2))
+        expect(page).to_not have_link(@merchant_3.name, href: admin_merchant_path(@merchant_3))
       end
     end
 
-    click_link(@merchant_1.name.to_s)
+    click_link(@merchant_1.name)
 
-    expect(current_path).to eq(admin_merchant_path(@merchant_1.id))
+    expect(current_path).to eq(admin_merchant_path(@merchant_1))
   end
 
   it "Links from index to page for creation of new merchant", :vcr do
     visit admin_merchants_path
 
-    expect(page).to have_link("Create New Merchant", href: "/admin/merchants/new")
+    expect(page).to have_link("Create New Merchant", href: new_admin_merchant_path)
 
     click_link("Create New Merchant")
 
@@ -97,12 +97,12 @@ RSpec.describe "Admin Merchants Index", type: :feature do
     customer_1 = create(:customer)
     customer_2 = create(:customer)
 
-    item_1 = Item.create!(name: "Gloomhaven", description: "Lorem ipsum", unit_price: 5, enabled: 0, merchant_id: @merchant_1.id)
-    item_2 = Item.create!(name: "Frosthaven", description: "Lorem ipsum 2", unit_price: 7, enabled: 0, merchant_id: @merchant_2.id)
-    item_3 = Item.create!(name: "Monopoly", description: "The worst board game", unit_price: 4, enabled: 0, merchant_id: @merchant_3.id)
-    item_4 = Item.create!(name: "Mysterium", description: "Lorem ipsum 4", unit_price: 4, enabled: 0, merchant_id: merchant_4.id)
-    item_5 = Item.create!(name: "Apocrypha", description: "Lorem ipsum 5", unit_price: 8, enabled: 0, merchant_id: merchant_5.id)
-    item_6 = Item.create!(name: "Zombicide", description: "Lorem ipsum 6", unit_price: 6, enabled: 0, merchant_id: merchant_6.id)
+    item_1 = create :item, {unit_price: 5, enabled: 0, merchant_id: @merchant_1.id}
+    item_2 = create :item, {unit_price: 7, enabled: 0, merchant_id: @merchant_2.id}
+    item_3 = create :item, {unit_price: 4, enabled: 0, merchant_id: @merchant_3.id}
+    item_4 = create :item, {unit_price: 4, enabled: 0, merchant_id: merchant_4.id}
+    item_5 = create :item, {unit_price: 8, enabled: 0, merchant_id: merchant_5.id}
+    item_6 = create :item, {unit_price: 6, enabled: 0, merchant_id: merchant_6.id}
 
     invoice_1 = Invoice.create!(customer_id: customer_1.id, status: 2)
     invoice_2 = Invoice.create!(customer_id: customer_2.id, status: 2)
