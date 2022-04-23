@@ -6,7 +6,7 @@ RSpec.describe InvoiceItem, type: :model do
     it { should validate_numericality_of(:unit_price) }
     it {
       should define_enum_for(:status).with([
-        'Pending', 'Packaged', 'Shipped'
+        "Pending", "Packaged", "Shipped"
       ])
     }
   end
