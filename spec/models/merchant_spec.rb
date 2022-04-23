@@ -37,11 +37,11 @@ RSpec.describe Merchant, type: :model do
       @invoice_item5 = create :invoice_item, {invoice_id: @invoice1.id, item_id: @item5.id, quantity: 1, unit_price: 3, status: 2}
       @invoice_item6 = create :invoice_item, {invoice_id: @invoice1.id, item_id: @item6.id, quantity: 1, unit_price: 2, status: 2}
       @transaction1 = create :transaction, {result: 0, invoice_id: @invoice1.id, credit_card_expiration_date: 12121212}
-      # 2nd invoice item for item1
+      #2nd invoice item for item1
       @invoice_item7 = create :invoice_item, {invoice_id: @invoice1.id, item_id: @item1.id, quantity: 1, unit_price: 10, status: 2}
-      # different merchant
+      #different merchant
       @invoice_item9 = create :invoice_item, {invoice_id: @invoice2.id, item_id: @item7.id, quantity: 1, unit_price: 60, status: 2}
-      # cancelled invoice
+      #cancelled invoice
       @invoice3 = create :invoice, {customer_id: @customer.id, status: 0}
       @invoice_item8 = create :invoice_item, {invoice_id: @invoice3.id, item_id: @item7.id, quantity: 1, unit_price: 60, status: 2}
       # failed transaction
@@ -69,7 +69,7 @@ RSpec.describe Merchant, type: :model do
       expect(@merchant.popular_items[0].item_best_day).to eq(@invoice1.created_at)
     end
   end
-
+#end deleted while merging, might be needed if I counted dos/ends poorly
   describe "methods" do
     it "Finds all enabled or disabled merchants" do
       merchant_1 = create(:merchant)
