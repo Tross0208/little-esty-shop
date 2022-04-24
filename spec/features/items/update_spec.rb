@@ -8,6 +8,7 @@ describe "Merchants Items update", type: :feature do
     @item2 = create :item, {merchant_id: @merchant1.id}
     @item3 = create :item, {merchant_id: @merchant2.id}
 
+
     @customer = create :customer
     @invoice1 = create :invoice, {customer_id: @customer.id}
     @invoice2 = create :invoice, {customer_id: @customer.id}
@@ -59,15 +60,17 @@ describe "Merchants Items update", type: :feature do
   end
 
   it "merchant can enable and disable items", :vcr do
-    visit merchant_item_path(@merchant1, @item1)
-    if @item1.enabled == "enabled"
-      expect(page).to have_button("Disable #{@item1.name}")
-      click_button "Disable #{@item1.name}"
+    item4 = create :item, {merchant_id: @merchant1.id, enabled: 0}
+    visit merchant_item_path(@merchant1, item4)
+    if item4.enabled == "enabled"
+      expect(page).to have_button("Disable #{item4.name}")
+      click_button "Disable #{item4.name}"
 
-      expect(page).to have_content("Item updated successfully")
-      expect(page).to have_button("Enable #{@item1.name}")
+      expect(page).to have_content("#{item4.name} updated successfully")
+      expect(page).to have_button("Enable #{item4.name}")
     end
 
+    visit merchant_item_path(@merchant1, @item1)
     if @item1.enabled == "disabled"
       expect(page).to have_button("Enable #{@item1.name}")
       click_button "Enable #{@item1.name}"
