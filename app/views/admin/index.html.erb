@@ -7,6 +7,7 @@
   <p><%= link_to "Invoices View", admin_invoices_path %></p>
 </div>
 
+<div id="top_customers">
 <h3>Favorite Customers:</h3>
   <% @customers.top_customers.each do |customer| %>
     <p>
@@ -22,5 +23,3 @@
     <p><strong><%= link_to "#{invoice.id}", admin_invoice_path(invoice.id) %> Created At: <%= invoice.created_at.strftime("%A, %B %e, %Y") %></strong></p>
   </div>
 <% end %>
-
-<div id="top_customers">
