@@ -35,7 +35,7 @@ class ItemsController < ApplicationController
       if item.save
         redirect_to merchant_items_path(params[:merchant_id])
       else
-        redirect_to new_merchant_items_path(params[:merchant_id])
+        redirect_to new_merchant_item_path(params[:merchant_id])
         flash[:notice] = "Error: all requested areas must be filled!"
       end
   end
