@@ -1,6 +1,6 @@
 <h1>Edit <%= @item.name%></h1>
 
-<%= form_with url: "/merchants/#{@merchant.id}/items/#{@item.id}", method: :patch do |f| %>
+<%= form_with url: merchant_item_path(@merchant, @item), method: :patch do |f| %>
   <p>
     <%= f.label :name %>
     <%= f.text_field :name, value: @item.name %>

@@ -4,9 +4,9 @@ class ApplicationController < ActionController::Base
   def welcome
   end
 
-  def repository_info
-    @repo = RepositoryFacade.repo_or_error_message
-  end
+  # def repository_info
+  #   @repo = RepositoryFacade.repo_or_error_message
+  # end
 
   private
 
