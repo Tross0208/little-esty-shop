@@ -72,10 +72,9 @@ describe "Merchants Items update", type: :feature do
 
     visit merchant_item_path(@merchant1, @item1)
     if @item1.enabled == "disabled"
-      save_and_open_page
       expect(page).to have_button("Enable #{@item1.name}")
       click_button "Enable #{@item1.name}"
-      save_and_open_page
+
       expect(page).to have_content("#{@item1.name} updated successfully")
       expect(page).to have_button("Disable #{@item1.name}")
     end
