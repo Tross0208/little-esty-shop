@@ -40,4 +40,17 @@ describe "New Items", type: :feature do
     expect(page).to have_current_path(merchant_items_path(@merchant2))
     expect(page).to have_content("This new item")
   end
+
+  it "rejects incomplete items", :vcr do
+    visit merchant_items_path(@merchant2)
+    click_link("Add new item")
+
+    fill_in 'Name', with: ""
+    fill_in 'Description', with: ''
+    fill_in 'Unit price', with: "No"
+    click_button 'Submit'
+
+    expect(page).to have_current_path(new_merchant_item_path(@merchant2))
+    expect(page).to have_content("Error")
+  end
 end
