@@ -1,0 +1,6 @@
+<h1>Merchant Bulk Discounts Index</h1>
+
+<% @merchant.bulkdiscounts.each_with_index do |discount, index| %>
+  <p>Discount <%= "#{index+1}" %></p>
+  <p>Quantity: <%= "#{discount.quantity}" %> Discount: <%= "#{discount.percent_discount * 100}"  %>%</p>
+<% end %>
