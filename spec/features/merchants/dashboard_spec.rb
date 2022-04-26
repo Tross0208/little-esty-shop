@@ -157,4 +157,12 @@ RSpec.describe "Merchant Dashboard", type: :feature do
       end
     end
   end
+  describe "bulk discount" do
+    it "links to merchants bulk discounts", :vcr do
+      visit merchant_dashboard_index_path(@merchant)
+
+      expect(page).to have_link("Bulk Discounts")
+
+    end
+  end
 end
