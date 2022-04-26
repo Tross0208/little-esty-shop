@@ -2,6 +2,7 @@
 
 <% @merchant.bulkdiscounts.each_with_index do |discount, index| %>
 <%= link_to "Discount #{index+1}", merchant_bulkdiscount_path(@merchant.id, discount.id) %>
+<%= button_to "Delete Discount #{index+1}", "/merchants/#{@merchant.id}/bulkdiscounts/#{discount.id}", method: :delete %>
   <p>Discount <%= "#{index+1}" %></p>
   <p>Quantity: <%= "#{discount.quantity}" %> Discount: <%= "#{discount.percent_discount * 100}"  %>%</p>
 <% end %>
