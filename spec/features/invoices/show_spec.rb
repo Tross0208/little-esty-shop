@@ -45,7 +45,7 @@ RSpec.describe "Merchant Invoices Show" do
       @newbulk1 = create(:bulkdiscount, quantity: 5, percent_discount: 0.5, merchant: @newmerchant1)
       @newbulk2 = create(:bulkdiscount, quantity: 1, percent_discount: 0.1, merchant: @newmerchant1)
       visit merchant_invoice_path(@newmerchant1, @newinvoice1)
-      save_and_open_page
+    
       expect(page).to have_content("Revenue After Discount:")
       expect(page).to have_content("$1.09")
     end
