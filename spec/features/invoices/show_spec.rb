@@ -35,6 +35,11 @@ RSpec.describe "Merchant Invoices Show" do
       expect(@invoices1[0].total_revenue).to eq(expected)
     end
 
+    it "Shows adjusted revenue", :vcr do
+      
+      expect(page).to have_content(@invoices1[0].adjusted_revenue)
+    end
+
     describe "invoice items" do
       it "lists all invoice item names, quantity, price and status", :vcr do
         within "#invoice_item-#{@invoice_item2.id}" do

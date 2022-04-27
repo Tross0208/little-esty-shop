@@ -49,4 +49,17 @@ RSpec.describe Invoice, type: :model do
     expect(invoice_all.incomplete_invoices[0].created_at.strftime("%A, %B %e, %Y")).to eq(invoice1.created_at.strftime("%A, %B %e, %Y"))
     expect(invoice_all.incomplete_invoices.length).to eq(1)
   end
+
+  it "returns items that can have a discount" do
+    @merchant1 = create(:merchant)
+    @item1 = create(:item, merchant: @merchant1)
+    @customer1 = create(:customer)
+    @invoice1 = create(:invoice, customer: @customer1)
+    @invoice_item1 = create(:invoice_item, invoice: @invoice1, item: @item1, quantity: 1, unit_price: 10)
+    @invoice_item2 = create(:invoice_item, invoice: @invoice1, item: @item1, quantity: 10, unit_price: 20)
+    @bulk1 = create(:bulkdiscount, quantity: 5, percent_discount: 0.5, merchant: @merchant1)
+    
+    expect(@invoice1.discount_revenue).to eq(100.0)
+    expect(@invoice1.adjusted_revenue).to eq(110.0)
+  end
 end
