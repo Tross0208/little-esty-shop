@@ -15,5 +15,24 @@ class BulkdiscountsController < ApplicationController
     redirect_to "/merchants/#{params[:merchant_id]}/bulkdiscounts"
   end
 
+  def new
+    @merchant = Merchant.find(params[:merchant_id])
+  end
+
+  def create
+    @merchant = Merchant.find(params[:merchant_id])
+    bulkdiscount = Bulkdiscount.new(bulkdiscount_params)
+      if bulkdiscount.save
+        redirect_to merchant_bulkdiscounts_path(params[:merchant_id])
+      else
+        redirect_to new_merchant_bulkdiscount_path(params[:merchant_id])
+        flash[:notice] = "Error: all requested areas must be filled!"
+      end
+  end
+  private
+
+  def bulkdiscount_params
+    params.permit(:id, :quantity, :percent_discount, :merchant_id)
+  end
 
 end
