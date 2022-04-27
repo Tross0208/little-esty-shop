@@ -43,7 +43,7 @@ class BulkdiscountsController < ApplicationController
       redirect_to merchant_bulkdiscount_path(params[:merchant_id], bulkdiscount.id)
       flash[:notice] = "Discount updated successfully"
     else
-      redirect_to edit_merchant_bulkdiscounts_path(params[:merchant_id], bulkdiscount.id)
+      redirect_to edit_merchant_bulkdiscount_path(params[:merchant_id], bulkdiscount.id)
       flash[:alert] = "Error: Discount not updated"
     end
   end

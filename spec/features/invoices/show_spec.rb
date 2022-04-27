@@ -35,6 +35,25 @@ RSpec.describe "Merchant Invoices Show" do
       expect(@invoices1[0].total_revenue).to eq(expected)
     end
 
+    it "Shows adjusted revenue", :vcr do
+      expect(page).to have_content("Revenue After Discount:")
+      expect(page).to have_content(@invoices1[0].adjusted_revenue)
+    end
+
+    it "Shows discounts applied", :vcr do
+      @newmerchant1 = create(:merchant)
+      @newitem1 = create(:item, merchant: @newmerchant1)
+      @newcustomer1 = create(:customer)
+      @newinvoice1 = create(:invoice, customer: @newcustomer1)
+      @newinvoice_item1 = create(:invoice_item, invoice: @newinvoice1, item: @newitem1, quantity: 1, unit_price: 10)
+      @newinvoice_item2 = create(:invoice_item, invoice: @newinvoice1, item: @newitem1, quantity: 10, unit_price: 20)
+      @newbulk1 = create(:bulkdiscount, quantity: 5, percent_discount: 0.5, merchant: @newmerchant1)
+      #binding.pry
+      visit merchant_invoice_path(@newmerchant1, @newinvoice1)
+      #save_and_open_page
+      expect(page).to have_link("Discount Used")
+    end
+
     describe "invoice items" do
       it "lists all invoice item names, quantity, price and status", :vcr do
         within "#invoice_item-#{@invoice_item2.id}" do
