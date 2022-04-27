@@ -1,4 +1,6 @@
 <h1>Discount Show</h1>
 
 <p>Quantity: <%= @bulkdiscount.quantity %></p>
-<p>Discount: <%= @bulkdiscount.percent_discount %>%</p>
+<p>Discount: <%= @bulkdiscount.percent_discount*100.round(2) %>%</p>
+
+<h3><%= link_to "Update Discount", edit_merchant_bulkdiscount_path(@merchant, @bulkdiscount) %></h3>
