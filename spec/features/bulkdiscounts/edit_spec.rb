@@ -14,7 +14,6 @@ RSpec.describe " New Bulk Discount", type: :feature do
     fill_in 'Quantity', with: 40
     fill_in 'Percent discount', with: 0.4
     click_button 'Save'
-    save_and_open_page
 
     expect(page).to have_current_path(merchant_bulkdiscount_path(@merchant, @bulk1))
     expect(page).to have_content("Quantity: 40")
