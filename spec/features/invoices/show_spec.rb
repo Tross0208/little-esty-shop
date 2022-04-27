@@ -36,8 +36,18 @@ RSpec.describe "Merchant Invoices Show" do
     end
 
     it "Shows adjusted revenue", :vcr do
+      @newmerchant1 = create(:merchant)
+      @newitem1 = create(:item, merchant: @newmerchant1)
+      @newcustomer1 = create(:customer)
+      @newinvoice1 = create(:invoice, customer: @newcustomer1)
+      @newinvoice_item1 = create(:invoice_item, invoice: @newinvoice1, item: @newitem1, quantity: 1, unit_price: 10)
+      @newinvoice_item2 = create(:invoice_item, invoice: @newinvoice1, item: @newitem1, quantity: 10, unit_price: 20)
+      @newbulk1 = create(:bulkdiscount, quantity: 5, percent_discount: 0.5, merchant: @newmerchant1)
+      @newbulk2 = create(:bulkdiscount, quantity: 1, percent_discount: 0.1, merchant: @newmerchant1)
+      visit merchant_invoice_path(@newmerchant1, @newinvoice1)
+      save_and_open_page
       expect(page).to have_content("Revenue After Discount:")
-      expect(page).to have_content(@invoices1[0].adjusted_revenue)
+      expect(page).to have_content("$1.09")
     end
 
     it "Shows discounts applied", :vcr do
@@ -48,6 +58,7 @@ RSpec.describe "Merchant Invoices Show" do
       @newinvoice_item1 = create(:invoice_item, invoice: @newinvoice1, item: @newitem1, quantity: 1, unit_price: 10)
       @newinvoice_item2 = create(:invoice_item, invoice: @newinvoice1, item: @newitem1, quantity: 10, unit_price: 20)
       @newbulk1 = create(:bulkdiscount, quantity: 5, percent_discount: 0.5, merchant: @newmerchant1)
+      @newbulk2 = create(:bulkdiscount, quantity: 1, percent_discount: 0.1, merchant: @newmerchant1)
       #binding.pry
       visit merchant_invoice_path(@newmerchant1, @newinvoice1)
       #save_and_open_page
