@@ -10,10 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_09_000709) do
+ActiveRecord::Schema.define(version: 2022_04_26_025543) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "bulkdiscounts", force: :cascade do |t|
+    t.integer "quantity"
+    t.float "percent_discount"
+    t.bigint "merchant_id"
+    t.index ["merchant_id"], name: "index_bulkdiscounts_on_merchant_id"
+  end
 
   create_table "customers", force: :cascade do |t|
     t.string "first_name"
@@ -58,6 +65,10 @@ ActiveRecord::Schema.define(version: 2022_04_09_000709) do
     t.boolean "enabled"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "bulkdiscounts_id"
+    t.bigint "bulkdiscount_id"
+    t.index ["bulkdiscount_id"], name: "index_merchants_on_bulkdiscount_id"
+    t.index ["bulkdiscounts_id"], name: "index_merchants_on_bulkdiscounts_id"
   end
 
   create_table "transactions", force: :cascade do |t|
@@ -70,9 +81,12 @@ ActiveRecord::Schema.define(version: 2022_04_09_000709) do
     t.index ["invoice_id"], name: "index_transactions_on_invoice_id"
   end
 
+  add_foreign_key "bulkdiscounts", "merchants"
   add_foreign_key "invoice_items", "invoices"
   add_foreign_key "invoice_items", "items"
   add_foreign_key "invoices", "customers"
   add_foreign_key "items", "merchants"
+  add_foreign_key "merchants", "bulkdiscounts"
+  add_foreign_key "merchants", "bulkdiscounts", column: "bulkdiscounts_id"
   add_foreign_key "transactions", "invoices"
 end
