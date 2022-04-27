@@ -19,4 +19,15 @@ RSpec.describe " New Bulk Discount", type: :feature do
     expect(page).to have_content("Quantity: 40")
     expect(page).to have_content("Discount: 40.0%")
   end
+
+  it "Rejects bad edit", :vcr do
+    visit merchant_bulkdiscount_path(@merchant, @bulk1)
+    click_link("Update Discount")
+    expect(page).to have_current_path(edit_merchant_bulkdiscount_path(@merchant, @bulk1))
+    fill_in 'Quantity', with: "B"
+    fill_in 'Percent discount', with: ""
+    click_button 'Save'
+    expect(page).to have_current_path(edit_merchant_bulkdiscount_path(@merchant, @bulk1))
+    expect(page).to have_content("Error")
+  end
 end

@@ -59,6 +59,7 @@ RSpec.describe Invoice, type: :model do
     @invoice_item2 = create(:invoice_item, invoice: @invoice1, item: @item1, quantity: 10, unit_price: 20)
     @bulk1 = create(:bulkdiscount, quantity: 5, percent_discount: 0.5, merchant: @merchant1)
 
+    expect(@invoice1.total_revenue).to eq(210.0)
     expect(@invoice1.discount_revenue).to eq(100.0)
     expect(@invoice1.adjusted_revenue).to eq(110.0)
   end

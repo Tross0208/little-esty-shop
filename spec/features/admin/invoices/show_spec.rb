@@ -59,10 +59,17 @@ RSpec.describe "Admin Invoice Show", type: :feature do
   end
 
   it "Shows adjusted revenue", :vcr do
-    visit admin_invoice_path(@invoice1)
-    
+    @newmerchant1 = create(:merchant)
+    @newitem1 = create(:item, merchant: @newmerchant1)
+    @newcustomer1 = create(:customer)
+    @newinvoice1 = create(:invoice, customer: @newcustomer1)
+    @newinvoice_item1 = create(:invoice_item, invoice: @newinvoice1, item: @newitem1, quantity: 1, unit_price: 10)
+    @newinvoice_item2 = create(:invoice_item, invoice: @newinvoice1, item: @newitem1, quantity: 10, unit_price: 20)
+    @newbulk1 = create(:bulkdiscount, quantity: 5, percent_discount: 0.5, merchant: @newmerchant1)
+    visit admin_invoice_path(@newinvoice1)
+  
     expect(page).to have_content("Revenue After Discount:")
-    expect(page).to have_content(@invoice1.adjusted_revenue)
+    expect(page).to have_content("$1.10")
   end
 
   it "Updates the invoice status to the status that is selected from the status select field", :vcr do
