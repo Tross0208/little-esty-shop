@@ -33,8 +33,10 @@ class Invoice < ApplicationRecord
    .sum(&:discount_amount)
   end
 
-  def check_discount
-    invoice_items.joins(:bulkdiscounts).where("invoice_items.quantity > bulkdiscounts.quantity")
+  def applied_discount
+    bulkdiscounts.where("invoice_items.quantity > bulkdiscounts.quantity")
+                  .order("bulkdiscounts.percent_discount")
+                  .first.id
   end
 
 

@@ -58,6 +58,13 @@ RSpec.describe "Admin Invoice Show", type: :feature do
     expect(@invoice1.total_revenue).to eq(expected)
   end
 
+  it "Shows adjusted revenue", :vcr do
+    visit admin_invoice_path(@invoice1)
+    
+    expect(page).to have_content("Revenue After Discount:")
+    expect(page).to have_content(@invoice1.adjusted_revenue)
+  end
+
   it "Updates the invoice status to the status that is selected from the status select field", :vcr do
     @invoice1.update(status: "In Progress")
     visit admin_invoice_path(@invoice1)

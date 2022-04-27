@@ -7,4 +7,5 @@ class InvoiceItem < ApplicationRecord
   validates :unit_price, presence: true, numericality: true
 
   enum status: {"Pending" => 0, "Packaged" => 1, "Shipped" => 2}
+
 end

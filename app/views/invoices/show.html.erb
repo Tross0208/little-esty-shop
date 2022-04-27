@@ -6,6 +6,8 @@
   <p><strong>Created On:</strong> <%= @invoice.created_at.strftime("%A, %B %d, %Y") %></p>
   <p><strong>Customer Name:</strong> <%= @invoice.customer.full_name %></p>
 
+
+
 <u><h2>Invoice Items:</h2></u>
 
 <% @invoice.invoice_items.each do |invoice_item| %>
